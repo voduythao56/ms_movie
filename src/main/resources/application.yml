@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/movie_app
+    username: root
+    password: movie_app
+    jpa:
+      hibernate.ddl-auto: update
+      generate-ddl: true
+      show-sql: true
+
+flyway:
+  url: jdbc:mysql://localhost:3306/movie_app
+  user: "root"
+  password: "movie_app"
