@@ -25,5 +25,6 @@ public class MovieRequest {
     @DecimalMax("5.0")
     @DecimalMin("0.5")
     @Digits(integer = 1, fraction = 1)
+    @NotNull
     private BigDecimal starRating;
 }

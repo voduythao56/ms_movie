@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
+import java.math.RoundingMode;
+
 @UtilityClass
 public class MovieMapper {
 
@@ -44,7 +46,7 @@ public class MovieMapper {
                 .id(movieEntity.getId())
                 .title(movieEntity.getTitle())
                 .category(movieEntity.getCategory())
-                .starRating(movieEntity.getStarRating())
+                .starRating(movieEntity.getStarRating().setScale(1, RoundingMode.HALF_UP))
                 .createdDate(movieEntity.getCreatedDate())
                 .updatedDate(movieEntity.getUpdatedDate())
                 .build();

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ public class MovieResponse {
 
     private String category;
 
+    @Digits(integer = 1, fraction = 1)
     private BigDecimal starRating;
 
     private LocalDateTime createdDate;

@@ -5,6 +5,7 @@ import com.assessment.movie.dto.response.MovieResponse;
 import com.assessment.movie.entity.MovieEntity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +54,7 @@ public class TestDataCreator {
                 .id(id)
                 .title("The Matrix " + id)
                 .category("Novel " + id)
-                .starRating(BigDecimal.valueOf(id % 5))
+                .starRating(BigDecimal.valueOf(id % 5).setScale(1, RoundingMode.HALF_UP))
                 .createdDate(LocalDateTime.of(2023, 11,28, 1,1,1))
                 .updatedDate(LocalDateTime.of(2023, 11,28, 3,3,3))
                 .build();
