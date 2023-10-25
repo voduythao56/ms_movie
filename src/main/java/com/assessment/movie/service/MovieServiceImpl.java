@@ -9,6 +9,7 @@ import com.assessment.movie.exception.NoMovieFoundException;
 import com.assessment.movie.mapper.MovieMapper;
 import com.assessment.movie.repository.CriteriaNoCountRepository;
 import com.assessment.movie.repository.MovieRepository;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,9 +32,9 @@ public class MovieServiceImpl implements MovieService {
     @Override
     @Transactional
     public MovieResponse create(MovieRequest movieRequest) {
-        MovieEntity movieEntity = MovieMapper.INSTANCE.requestToEntity(movieRequest);
+        MovieEntity movieEntity = MovieMapper.requestToEntity(movieRequest);
         movieEntity = movieRepository.save(movieEntity);
-        return MovieMapper.INSTANCE.entityToResponse(movieEntity);
+        return MovieMapper.entityToResponse(movieEntity);
     }
 
     @Override
@@ -41,16 +42,16 @@ public class MovieServiceImpl implements MovieService {
     public MovieResponse update(Long id, MovieRequest movieRequest) {
         MovieEntity movieEntity = getMovieEntity(id);
 
-        MovieMapper.INSTANCE.requestToUpdatingEntity(movieRequest, movieEntity);
+        MovieMapper.requestToUpdatingEntity(movieRequest, movieEntity);
 
         movieEntity = movieRepository.save(movieEntity);
-        return MovieMapper.INSTANCE.entityToResponse(movieEntity);
+        return MovieMapper.entityToResponse(movieEntity);
     }
 
     @Override
     public MovieResponse get(Long id) {
         MovieEntity movieEntity = getMovieEntity(id);
-        return MovieMapper.INSTANCE.entityToResponse(movieEntity);
+        return MovieMapper.entityToResponse(movieEntity);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
         Page<MovieEntity> result = criteriaNoCountRepository.findAll(pageable, MovieEntity.class);
 
         return GroupMovieResponse.builder()
-                .movie(result.get().map(MovieMapper.INSTANCE::entityToResponse).collect(Collectors.toList()))
+                .movies(result.get().map(MovieMapper::entityToResponse).collect(Collectors.toList()))
                 .page(page)
                 .size(size)
                 .build();

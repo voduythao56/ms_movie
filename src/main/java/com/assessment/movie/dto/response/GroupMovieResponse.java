@@ -17,5 +17,5 @@ public class GroupMovieResponse {
 
     private int size;
 
-    private List<MovieResponse> movie;
+    private List<MovieResponse> movies;
 }

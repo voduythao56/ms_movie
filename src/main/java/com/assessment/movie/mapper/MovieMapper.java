@@ -3,20 +3,52 @@ package com.assessment.movie.mapper;
 import com.assessment.movie.dto.request.MovieRequest;
 import com.assessment.movie.dto.response.MovieResponse;
 import com.assessment.movie.entity.MovieEntity;
+import lombok.experimental.UtilityClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
-public interface MovieMapper {
+@UtilityClass
+public class MovieMapper {
 
-    MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
+    public static MovieEntity requestToEntity(MovieRequest movieRequest) {
+        if ( movieRequest == null ) {
+            return null;
+        }
 
-    MovieEntity requestToEntity(MovieRequest movieRequest);
+        MovieEntity movieEntity = new MovieEntity();
+        movieEntity.setTitle(movieRequest.getTitle());
+        movieEntity.setCategory(movieRequest.getCategory());
+        movieEntity.setStarRating(movieRequest.getStarRating());
 
-    void requestToUpdatingEntity(MovieRequest movieRequest, @MappingTarget MovieEntity movieEntity);
+        return movieEntity;
+    }
 
-    MovieResponse entityToResponse(MovieEntity movieEntity);
+    public static void requestToUpdatingEntity(MovieRequest source, MovieEntity destination) {
+        if ( source == null || destination == null) {
+            return;
+        }
+        destination.setTitle(source.getTitle());
+        destination.setCategory(source.getCategory());
+        destination.setStarRating(source.getStarRating());
+    }
+
+    public static MovieResponse entityToResponse(MovieEntity movieEntity) {
+        if ( movieEntity == null ) {
+            return null;
+        }
+
+        return MovieResponse
+                .builder()
+                .id(movieEntity.getId())
+                .title(movieEntity.getTitle())
+                .category(movieEntity.getCategory())
+                .starRating(movieEntity.getStarRating())
+                .createdDate(movieEntity.getCreatedDate())
+                .updatedDate(movieEntity.getUpdatedDate())
+                .build();
+
+    }
 
 }

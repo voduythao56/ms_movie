@@ -28,7 +28,16 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+	testImplementation 'org.mockito:mockito-core:5.3.1'
+	testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
+
+	testImplementation 'org.testcontainers:testcontainers:1.19.1'
+	testImplementation 'org.testcontainers:mysql:1.19.1'
+	testImplementation 'org.testcontainers:junit-jupiter:1.19.1'
+
 }
 
 tasks.named('test') {

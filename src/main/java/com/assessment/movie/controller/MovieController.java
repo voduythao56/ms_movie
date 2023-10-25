@@ -50,7 +50,7 @@ public class MovieController {
     }
 
     @GetMapping("/v1/movies")
-    public ResponseEntity<GroupMovieResponse> get(@RequestParam(value = "page", defaultValue = "0", required = false) @Min(0) @Max(Constants.MAX_PAGE_NO) int page,
+    public ResponseEntity<GroupMovieResponse> getList(@RequestParam(value = "page", defaultValue = "0", required = false) @Min(0) @Max(Constants.MAX_PAGE_NO) int page,
                                                   @RequestParam(value = "size", defaultValue = Constants.DEFAULT_PAGE_SIZE_AS_STR, required = false) @Min(0) @Max(Constants.MAX_PAGE_SIZE) int size) {
         GroupMovieResponse groupMovieResponse = movieService.getList(page, size);
         return new ResponseEntity<>(groupMovieResponse, HttpStatus.OK);
