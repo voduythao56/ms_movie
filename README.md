@@ -7,9 +7,10 @@
 ### How to run application:
 1. Make sure your local already install docker
 2. cd ms_movie
-3. docker compose up
+3. docker compose up -d
    
-![docker-compose-up](https://github.com/voduythao56/ms_movie/assets/90848380/9050d16a-14dc-4d66-ae8a-76326b1a6abd)
+![docker-compose-up](https://github.com/voduythao56/ms_movie/assets/90848380/6a674bb6-c344-47b5-b084-c4dbfd0360e5)
+
 ![container](https://github.com/voduythao56/ms_movie/assets/90848380/87a7fe76-07db-42e8-86bc-b263ec2c5392)
 
 
