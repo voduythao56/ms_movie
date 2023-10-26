@@ -6,8 +6,10 @@
 
 ### How to run application:
 1. Make sure your local already install docker
-2. cd ms_movie
-3. docker compose up -d
+2. run: **cd ms_movie**
+3. run: **./gradlew clean build** to make sure everything ok
+   - if we got **permission denied: /.gradlew** then grant permission for ./gradlew (run: **chmod +x gradlew**)
+4. run: **docker compose up -d**
    
 ![docker-compose-up](https://github.com/voduythao56/ms_movie/assets/90848380/6a674bb6-c344-47b5-b084-c4dbfd0360e5)
 
