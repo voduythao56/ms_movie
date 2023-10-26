@@ -4,10 +4,6 @@ import com.assessment.movie.dto.request.MovieRequest;
 import com.assessment.movie.dto.response.MovieResponse;
 import com.assessment.movie.entity.MovieEntity;
 import lombok.experimental.UtilityClass;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 import java.math.RoundingMode;
 

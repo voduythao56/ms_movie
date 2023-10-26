@@ -19,9 +19,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -111,6 +111,7 @@ public class MovieServiceImplTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void shouldGetListMovieSuccessfully() {
         int page = 4;
         int size = 12;
@@ -137,7 +138,7 @@ public class MovieServiceImplTest {
         Assertions.assertEquals(expectedResult.getId(), actualResult.getId());
         Assertions.assertEquals(expectedResult.getTitle(), actualResult.getTitle());
         Assertions.assertEquals(expectedResult.getCategory(), actualResult.getCategory());
-        Assertions.assertEquals(expectedResult.getStarRating(), actualResult.getStarRating());
+        Assertions.assertEquals(expectedResult.getStarRating().setScale(1, RoundingMode.HALF_UP), actualResult.getStarRating());
         Assertions.assertEquals(expectedResult.getCreatedDate(), actualResult.getCreatedDate());
         Assertions.assertEquals(expectedResult.getUpdatedDate(), actualResult.getUpdatedDate());
     }

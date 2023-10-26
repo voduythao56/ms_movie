@@ -1,0 +1,299 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Swagger moviestore
+  description: Movie management api demonstrate features in the OpenAPI 3.0 specification
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Thao Vo
+    email: voduythao56@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:8080/ms-movies/api/v1
+paths:
+  /movies:
+    get:
+      tags:
+        - MOVIE
+      summary: Return movies from the system with pagination
+      description: Return movies from the system with pagination
+      operationId: findmovies
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 2000000000
+            default: 0
+          description: The page number need to be reach to collect the result set
+        - in: query
+          name: size
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 5
+          description: The numbers of items to return
+      responses:
+        '200':
+          description: Group Movie Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMovieResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '500':
+          description: System error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - MOVIE
+      summary: Create a new Movie.
+      description: Create a new Movie.
+      operationId: addMovie
+      requestBody:
+        description: Movie to add to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieRequest'
+      responses:
+        '200':
+          description: Movie response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '500':
+          description: System error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /movies/{id}:
+    put:
+      tags:
+        - MOVIE
+      summary: Update a new Movie.
+      description: Update a new Movie.
+      operationId: updateMovie
+      parameters:
+        - name: id
+          in: path
+          description: ID of Movie to fetch
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Request to update movie.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieRequest'
+      responses:
+        '200':
+          description: Movie response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '500':
+          description: System error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - MOVIE
+      summary: Return a movie base on single ID
+      description: Return a movie base on single ID
+      operationId: find Movie by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of Movie to fetch
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 0x7fffffffffffffff
+      responses:
+        '200':
+          description: Movie response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '500':
+          description: System error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - MOVIE
+      summary: Delete a movie base on single id
+      description: Delete a movie base on single id
+      operationId: deleteMovie
+      parameters:
+        - name: id
+          in: path
+          description: ID of Movie to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '500':
+          description: System error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    MovieRequest:
+      allOf:
+        - type: object
+          required:
+            - title
+            - category
+            - starRating
+          properties:
+            title:
+              type: string
+              minLength: 1
+              maxLength: 200
+            category:
+              type: string
+              minLength: 1
+              maxLength: 200
+            starRating:
+              type: number
+              multipleOf: 0.1
+              minimum: 0.5
+              maximum: 5.0
+
+    MovieResponse:
+      allOf:
+        - type: object
+          required:
+            - id
+            - title
+            - category
+            - starRating
+            - createdDate
+            - updatedDate
+          properties:
+            id:
+              type: number
+            title:
+              type: string
+              minLength: 1
+              maxLength: 200
+            category:
+              type: string
+              minLength: 1
+              maxLength: 200
+            starRating:
+              type: number
+              multipleOf: 0.1
+              minimum: 0.5
+              maximum: 5.0
+            createdDate:
+              type: string
+              format: date-time
+            updatedDate:
+              type: string
+              format: date-time
+    GroupMovieResponse:
+      allOf:
+        - type: object
+          required:
+            - page
+            - size
+            - movies
+          properties:
+            page:
+              type: number
+            size:
+              type: number
+            movies:
+              type: array
+              items:
+                $ref: '#/components/schemas/MovieResponse'
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ErrorDetail:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  value:
+                    type: string
+                  issue:
+                    type: string
+

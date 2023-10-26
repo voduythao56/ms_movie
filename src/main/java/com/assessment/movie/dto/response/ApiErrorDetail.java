@@ -15,7 +15,5 @@ public class ApiErrorDetail {
 
     private String value;
 
-    private String location;
-
     private String issue;
 }

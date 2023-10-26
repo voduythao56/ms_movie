@@ -1,29 +1,28 @@
 package com.assessment.movie.unit.controller;
 
+import com.assessment.movie.MovieApplication;
 import com.assessment.movie.common.TestDataCreator;
-import com.assessment.movie.controller.MovieController;
 import com.assessment.movie.dto.request.MovieRequest;
 import com.assessment.movie.dto.response.GroupMovieResponse;
 import com.assessment.movie.dto.response.MovieResponse;
 import com.assessment.movie.exception.ErrorCode;
 import com.assessment.movie.exception.NoMovieFoundException;
+import com.assessment.movie.repository.CriteriaNoCountRepository;
+import com.assessment.movie.repository.MovieRepository;
 import com.assessment.movie.service.MovieService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,8 +39,10 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = MovieApplication.class)
 @AutoConfigureMockMvc
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
+@ActiveProfiles("test")
 class MovieControllerTest {
 
     private static final ObjectMapper om = new ObjectMapper();
@@ -50,6 +51,12 @@ class MovieControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private MovieService movieService;
+
+    @MockBean
+    private MovieRepository movieRepository;
+
+    @MockBean
+    private CriteriaNoCountRepository criteriaNoCountRepository;
 
 
     @Test
@@ -111,7 +118,7 @@ class MovieControllerTest {
         assertCreateMovieFailWithInvalidField(movieRequest, "starRating", "1.0999", "numeric value out of bounds (<1 digits>.<1 digits> expected)");
     }
 
-    private void assertCreateMovieFailWithInvalidField(MovieRequest movieRequest, String fieldName, String value, String expectedIssue) throws Exception{
+    private void assertCreateMovieFailWithInvalidField(MovieRequest movieRequest, String fieldName, String value, String expectedIssue) throws Exception {
         mockMvc.perform(post("/api/v1/movies")
                         .content(om.writeValueAsString(movieRequest))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
@@ -151,7 +158,7 @@ class MovieControllerTest {
         assertGetMovieFailWithInvalidField("1212121121212121212121", "'id' should be a valid 'Long' and '1212121121212121212121' isn't");
     }
 
-    private void assertGetMovieFailWithInvalidField(String idValue, String expectedIssue) throws Exception{
+    private void assertGetMovieFailWithInvalidField(String idValue, String expectedIssue) throws Exception {
         mockMvc.perform(get("/api/v1/movies/" + idValue))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -239,7 +246,7 @@ class MovieControllerTest {
         assertUpdateMovieFailWithInvalidField(movieRequest, "starRating", "1.0999", "numeric value out of bounds (<1 digits>.<1 digits> expected)");
     }
 
-    private void assertUpdateMovieFailWithInvalidField(MovieRequest movieRequest, String fieldName, String value, String expectedIssue) throws Exception{
+    private void assertUpdateMovieFailWithInvalidField(MovieRequest movieRequest, String fieldName, String value, String expectedIssue) throws Exception {
         mockMvc.perform(put("/api/v1/movies/1")
                         .content(om.writeValueAsString(movieRequest))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
@@ -343,8 +350,8 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.code", is(ErrorCode.INVALID_INPUT.getCode())))
                 .andExpect(jsonPath("$.message", is(ErrorCode.INVALID_INPUT.getDescription())))
                 .andExpect(jsonPath("$.details", containsInAnyOrder(
-                        Map.of("field", "page", "value", "-1","issue","must be greater than or equal to 0"),
-                        Map.of("field", "size", "value", "0","issue","must be greater than or equal to 1")
+                        Map.of("field", "page", "value", "-1", "issue", "must be greater than or equal to 0"),
+                        Map.of("field", "size", "value", "0", "issue", "must be greater than or equal to 1")
                 )));
 
         mockMvc.perform(get("/api/v1/movies")
@@ -355,8 +362,8 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.code", is(ErrorCode.INVALID_INPUT.getCode())))
                 .andExpect(jsonPath("$.message", is(ErrorCode.INVALID_INPUT.getDescription())))
                 .andExpect(jsonPath("$.details", containsInAnyOrder(
-                        Map.of("field", "page", "value", "2100000000","issue","must be less than or equal to 2000000000"),
-                        Map.of("field", "size", "value", "2110000000","issue","must be less than or equal to 1000")
+                        Map.of("field", "page", "value", "2100000000", "issue", "must be less than or equal to 2000000000"),
+                        Map.of("field", "size", "value", "2110000000", "issue", "must be less than or equal to 1000")
                 )));
 
 
