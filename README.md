@@ -16,7 +16,7 @@
 
 
 ### Testing
-1. Import ms_movie/MovieManagement.postman_collection.json to POSTMAN for testing
+1. Import ms_movie/Movie Management.postman_collection.json to POSTMAN for testing
 ![postman](https://github.com/voduythao56/ms_movie/assets/90848380/5b944e4f-624a-4110-b327-f639f1b9592d)
 
 2. Example:
