@@ -1,7 +1,7 @@
 # ms_movie
 
 ### Instruction:
-1. Open ms_movie/move-swagger.yml using Swagger Editor (https://editor.swagger.io/) to get details about all apis
+1. Open ms_movie/movie-swagger.yml using Swagger Editor (https://editor.swagger.io/) to get details about all apis
    ![swagger](https://github.com/voduythao56/ms_movie/assets/90848380/f41ffb94-f98f-441e-8296-bb914ebb7706)
 
 ### How to run application:
