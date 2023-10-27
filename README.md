@@ -1,10 +1,10 @@
 # ms_movie
 
 # Table of Contents
-1. [Instruction](#instruction)
-2. [How to run application](#how-to-run-application)
-3. [Non Functional Testing](#non-functional-testing)
-4. [Functional Testing](#functional-testing)
+1. [Instruction](#1-instruction)
+2. [How to run application](#2-how-to-run-application)
+3. [Non Functional Testing](#3-non-functional-testing)
+4. [Functional Testing](#4-functional-testing)
 
 
 ### 1. Instruction:
