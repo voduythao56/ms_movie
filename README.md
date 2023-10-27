@@ -7,7 +7,7 @@
 ### How to run application:
 1. Make sure your local already install docker
 2. run: **cd ms_movie**
-3. run: **./gradlew clean build** to make sure everything ok
+3. run: **./gradlew clean build -x test** to make sure everything ok. (Exclude test because it may take time to pull MySQL image. We can include this in Non Functional testing part)
    - if we got **permission denied: /.gradlew** then grant permission for ./gradlew (run: **chmod +x gradlew**)
 4. run: **docker compose up -d**
    
@@ -15,10 +15,14 @@
 
 ![container](https://github.com/voduythao56/ms_movie/assets/90848380/87a7fe76-07db-42e8-86bc-b263ec2c5392)
 
+### Non Functional Testing
+1. Unit test (src/test/java/com/assessment/movie/unit)
+2. Integration test using testcontainers (Integrate with MySQL DB container) (src/test/java/com/assessment/movie/integration)
+3. Running
+   - Run: cd ms_movie
+   - Run: **./gradlew test** (or **./gradlew clean build**)
 
-
-
-### Testing
+### Functional Testing
 1. Import ms_movie/Movie Management.postman_collection.json to POSTMAN for testing
 ![postman](https://github.com/voduythao56/ms_movie/assets/90848380/5b944e4f-624a-4110-b327-f639f1b9592d)
 
