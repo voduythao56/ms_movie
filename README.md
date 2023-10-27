@@ -8,18 +8,20 @@
 1. Make sure your local already install docker
 2. run: **cd ms_movie**
 3. run: **./gradlew clean build -x test** to make sure everything ok. (Exclude test because it may take time to pull MySQL image. We can include this in Non Functional testing part)
-   - if we got **permission denied: /.gradlew** then grant permission for ./gradlew (run: **chmod +x gradlew**)
+   - if we got **permission denied: /.gradlew** then grant permission for ./gradlew (run on macos for grant permission: **chmod +x gradlew**)
 4. run: **docker compose up -d**
    
 ![docker-compose-up](https://github.com/voduythao56/ms_movie/assets/90848380/6a674bb6-c344-47b5-b084-c4dbfd0360e5)
 
 ![container](https://github.com/voduythao56/ms_movie/assets/90848380/87a7fe76-07db-42e8-86bc-b263ec2c5392)
 
+![running](https://github.com/voduythao56/ms_movie/assets/90848380/8ec7429a-49e1-42c9-86e6-d6810c7f86c2)
+
 ### Non Functional Testing
 1. Unit test (src/test/java/com/assessment/movie/unit)
 2. Integration test using testcontainers (Integrate with MySQL DB container) (src/test/java/com/assessment/movie/integration)
 3. Running
-   - Run: cd ms_movie
+   - Run: **cd ms_movie**
    - Run: **./gradlew test** (or **./gradlew clean build**)
 
 ### Functional Testing
