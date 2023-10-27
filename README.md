@@ -8,7 +8,7 @@
 
 
 ### 1. Instruction:
-1. Open ms_movie/movie-swagger.yml using Swagger Editor (https://editor.swagger.io/) to get details about all apis
+1. Open **ms_movie/movie-swagger.yml** using Swagger Editor (https://editor.swagger.io/) to get details about all apis
    ![swagger](https://github.com/voduythao56/ms_movie/assets/90848380/f41ffb94-f98f-441e-8296-bb914ebb7706)
 
 ### 2. How to run application:
@@ -41,7 +41,7 @@
    - Run: **./gradlew test** (or **./gradlew clean build**)
 
 ### 4. Functional Testing
-1. Import ms_movie/Movie Management.postman_collection.json to POSTMAN for testing
+1. Import **ms_movie/Movie Management.postman_collection.json** to POSTMAN for testing
 ![postman](https://github.com/voduythao56/ms_movie/assets/90848380/5b944e4f-624a-4110-b327-f639f1b9592d)
 
 2. Example:
